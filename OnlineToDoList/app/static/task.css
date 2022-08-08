@@ -1,0 +1,50 @@
+h2 {
+border: 1px solid black; 
+padding: 35px 500px;
+background: #0e0d0d;
+color: white;
+font-size: 20px ;
+font-family: verdana;
+}
+
+h3 {
+color: black;
+font-size: 20px ;
+font-size: 20px ;
+font-family: verdana;
+}
+
+.button{
+    color:green;
+}
+
+html {
+  background: whitesmoke;
+}
+
+a {
+  vertical-align: top;
+}
+
+#left, #right, #middle {
+  display: inline-block; 
+  *display: inline; 
+  vertical-align: top;
+}
+
+#left {
+  width: 25%;
+}
+
+#middle {
+  width: 50%;
+}
+
+#right {
+  position: fixed;
+  width: 25%;
+  right: 0;
+  margin-right: auto;
+}
+
+

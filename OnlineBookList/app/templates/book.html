@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<!--BookList Home Page-->
+<!--home page template-->
+
+<html>
+
+  <head>
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>No title</title>
+    {% endif %}
+    
+    <!--CSS link-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='book.css')}}">
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+      integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css"
+      href="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.css" />
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-expand-sm navbar-light bg-light">
+      <a class="navbar-brand" href="#">Navbar</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item"><a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a></li>
+        </ul>
+      </div>
+    </nav>
+
+      <h2>Hello, welcome to your booklist</h2>
+      <h3>Let's See What You're Reading</h3>
+      <br>
+      <br>
+
+      <!--division for creating a book-->
+      <div id = "right"><h4>Add a new book:</h4>
+        <form action="{{ url_for('createBook') }}" method="POST">
+          {{ form.hidden_tag() }}
+          <p>
+            Title <br>
+            <p> <strong>
+            {{form.title}}</strong><br>
+            {% for error in form.title.errors %}
+            <span style="color: red;"> [{{error}}]</span>
+            <input type="text" name="title" value="Enter a title:>">
+            {% endfor %}<br>
+            </p>
+          </p>
+
+          <p>
+            Description <br>
+            {{form.description}}<br>
+            {% for error in form.description.errors %}
+            <span style="color: red;"> [{{error}}]</span>
+            <input type="text" name="description" value="Enter a book description:>">
+            {% endfor %}<br>
+          </p>
+
+          <p>
+            Start Date (YYYY-MM-DD) <br>
+            {{form.date}}<br>
+            {% for error in form.date.errors %}
+            <span style="color: red;"> [{{error}}]</span>
+            <input type="text" name="date" value="Enter a start date:">
+            {% endfor %}<br>
+          </p>
+
+          <input type="submit" value="Add Book" class="button">
+        </form>
+      </div>
+
+      <!--division for viewing unfinished books-->
+        <div id="left">
+        <h3>Unfinished Books</h3>
+        <ul>
+          {% for t in incomplete %}
+          <li class='mark'><strong>{{t.booktitle}} :</strong><br> {{ t.description }} <br> started on {{t.startdate}} <br> <a href="{{ url_for('completedBooks', id=t.id) }}">Mark As Complete</a></li>
+          <br>
+          <br>
+          {% endfor %}
+        </ul>
+        <br>
+        <br>
+        <br>
+        <br>
+        </div>
+
+        <!--division for viewing completed books-->
+        <div id="middle">
+        <h3>Completed Books</h3>
+        <ul>
+          {% for t in complete %}
+          <li>{{t.booktitle}} <br></li>
+          {% endfor %}
+        </ul>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+          integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js"
+          integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"
+          integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+        <script src="https://cdn.jsdelivr.net/npm/cookieconsent@3/build/cookieconsent.min.js" data-cfasync="false"></script>
+        <script>
+          window.cookieconsent.initialise({
+            "palette": {
+              "popup": {
+                "background": "#eaf7f7",
+                "text": "#5c7291"
+              },
+              "button": {
+                "background": "#56cbdb",
+                "text": "#ffffff"
+              }
+            }
+          });
+        </script>
+  </body>
+</html>

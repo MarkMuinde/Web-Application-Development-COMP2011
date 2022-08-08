@@ -1,0 +1,84 @@
+<!--To Do List Home Page-->
+
+<!--home page template-->
+<html>
+  <head>
+    {% if title %}
+    <title>{{ title }}</title>
+    {% else %}
+    <title>No title</title>
+    {% endif %}
+
+    <!--CSS link-->
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='task.css')}}">
+  </head>
+  <body>
+      <h2>Hello, welcome to your to-do list</h2>
+      <h3>Let's See What's On Your Plate</h3>
+      <br>
+      <br>
+
+      <!--division for creating a task-->
+      <div id = "right"><h4>Add a new task:</h4>
+        <form action="{{ url_for('createTask') }}" method="POST">
+          {{ form.hidden_tag() }}
+          <p>
+            Title <br>
+            <p> <strong>
+            {{form.title}}</strong><br>
+            {% for error in form.title.errors %}
+            <span style="color: red;"> [{{error}}]</span>
+            <input type="text" name="title" value="Enter a title:>">
+            {% endfor %}<br>
+            </p>
+          </p>
+
+          <p>
+            Description <br>
+            {{form.task}}<br>
+            {% for error in form.task.errors %}
+            <span style="color: red;"> [{{error}}]</span>
+            <input type="text" name="task" value="Enter a task description:>">
+            {% endfor %}<br>
+          </p>
+
+          <p>
+            Due Date (YYYY-MM-DD) <br>
+            {{form.date}}<br>
+            {% for error in form.date.errors %}
+            <span style="color: red;"> [{{error}}]</span>
+            <input type="text" name="date" value="Enter a due date:">
+            {% endfor %}<br>
+          </p>
+
+          <input type="submit" value="Add Task" class="button">
+        </form>
+      </div>
+
+      <!--division for viewing pending tasks-->
+        <div id="left">
+        <h3>Pending Tasks</h3>
+        <ul>
+          {% for t in incomplete %}
+          <li class='mark'><strong>{{t.tasktitle}} :</strong><br> {{ t.description }} <br> due on {{t.deadline}} <br> <a href="{{ url_for('completedTasks', id=t.id) }}">Mark As Complete</a></li>
+          <br>
+          <br>
+          {% endfor %}
+        </ul>
+        <br>
+        <br>
+        <br>
+        <br>
+        </div>
+
+        <!--division for viewing completed tasks-->
+        <div id="middle">
+        <h3>Completed Tasks</h3>
+        <ul>
+          {% for t in complete %}
+          <li>{{t.tasktitle}} <br></li>
+          {% endfor %}
+        </ul>
+        </div>
+  </body>
+</html>
